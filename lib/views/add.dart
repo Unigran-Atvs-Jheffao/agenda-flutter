@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class AddContact extends StatefulWidget {
-  final int? idx;
   final Contact? contact;
 
-  const AddContact({super.key, this.idx, this.contact});
+  const AddContact({super.key, this.contact});
 
   @override
   State<AddContact> createState() => _AddContactState();
@@ -24,6 +23,8 @@ class _AddContactState extends State<AddContact> {
   void initState() {
     super.initState();
     if (widget.contact != null) {
+      //Caso o contato do widget seja definido significa que estamos editando um contato
+      //Então os controladores são redefinidos com os valores vindo de contato
       nameController = TextEditingController(text: widget.contact!.name);
       phoneNumberController =
           TextEditingController(text: widget.contact!.phoneNumber);
@@ -38,6 +39,7 @@ class _AddContactState extends State<AddContact> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
+        //Define o titulo condicionalmente usando a mesma logica de existencia do contato no widget
         title: widget.contact != null
             ? const Text("Editar Contato")
             : const Text("Criar Contato"),
@@ -80,27 +82,25 @@ class _AddContactState extends State<AddContact> {
                   if (value == null || value.isEmpty) {
                     return 'Insira um email';
                   }
-                  if (RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                  if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
                       .hasMatch(value)) {
-                    return null;
+                    return 'Email invalido';
                   }
-                  return 'Email invalido';
+                  return null;
                 },
               ),
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: FilledButton(
                   onPressed: () {
+                    //Faz o Form validar os campos usando os validators definidoes nos FormFields
                     if (_formKey.currentState!.validate()) {
                       Contact contact = Contact(
                           name: nameController.text,
                           email: emailController.text,
                           phoneNumber: phoneNumberController.text);
-                      if (widget.contact != null) {
-                        Navigator.pop(context, {widget.idx: contact});
-                      } else {
-                        Navigator.pop(context, contact);
-                      }
+                      //Empurra o resultado do contato para a tela anterior
+                      Navigator.pop(context, contact);
                     }
                   },
                   child: const Padding(

@@ -65,6 +65,7 @@ class _ContactListItemState extends State<ContactListItem> {
                         InkWell(
                           borderRadius: BorderRadius.circular(100),
                           onTap: () {
+                            //Cria uma confirmação de remoção
                             var future = showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
@@ -73,20 +74,22 @@ class _ContactListItemState extends State<ContactListItem> {
                                 actions: [
                                   TextButton(
                                       onPressed: () {
-                                        Navigator.pop(context, "Não");
+                                        Navigator.pop(context, false);
                                       },
                                       child: const Text("Não")),
                                   TextButton(
                                       onPressed: () {
-                                        Navigator.pop(context, "Sim");
+                                        Navigator.pop(context, true);
                                       },
                                       child: const Text("Sim"))
                                 ],
                               ),
                             );
+                            //Espera até uma ação ser retornada da confirmação, e caso o valor seja sim
+                            //deleta o contato, ou manda nulo, que fara com que o nada seja deletado
                             future.then(
-                              (value) => widget.parent
-                                  .delete(value == "Sim" ? contact : null),
+                              (value) =>
+                                  widget.parent.delete(value ? contact : null),
                             );
                           },
                           child: const Padding(
@@ -97,17 +100,20 @@ class _ContactListItemState extends State<ContactListItem> {
                         InkWell(
                           borderRadius: BorderRadius.circular(100),
                           onTap: () {
+                            //Abre a mesma tela de criar contato com o elemento do contato definido
+                            //fazendo com que a tela funcione como uma tela de edição de contato
+                            //Mesma idea da tela de listagem, é esperado que o resultado retorne um contato
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => AddContact(
-                                    idx: widget.index, contact: widget.contact),
+                                builder: (context) =>
+                                    AddContact(contact: widget.contact),
                               ),
                             ).then(
+                              //E se retornar, é realizada uma atualizaçãodo contato fazendo com que os componentes rerenderizem
                               (value) {
-                                if (value is Map) {
-                                  widget.parent.update(
-                                      value.keys.first, value.values.first);
+                                if (value is Contact) {
+                                  widget.parent.update(widget.index, value);
                                 }
                               },
                             );

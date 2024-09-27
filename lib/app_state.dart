@@ -1,7 +1,7 @@
 import 'package:agenda/controllers/contact_controller.dart';
 
-class AppState{
-  ContactController contactController = ContactController();
-}
+//Essa classe apenas gerencia o estado da aplicação enquando executando
 
-var state = AppState();
+class AppState{
+  static ContactController contactController = ContactController();
+}

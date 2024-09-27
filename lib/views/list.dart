@@ -15,20 +15,20 @@ class ContactListState extends State<ContactList> {
   void delete(Contact? contact) {
     setState(() {
       if (contact != null) {
-        state.contactController.delete(contact);
+        AppState.contactController.delete(contact);
       }
     });
   }
 
   void add(Contact contact) {
     setState(() {
-      state.contactController.add(contact);
+      AppState.contactController.add(contact);
     });
   }
 
   void update(int idx, Contact contact) {
     setState(() {
-      state.contactController.update(idx, contact);
+      AppState.contactController.update(idx, contact);
     });
   }
 
@@ -44,25 +44,24 @@ class ContactListState extends State<ContactList> {
           return ContactListItem(
             this,
             index,
-            state.contactController.getByIndex(index),
+            AppState.contactController.getByIndex(index),
           );
         },
-        itemCount: state.contactController.list().length,
+        itemCount: AppState.contactController.list().length,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          //Navega até a tela de criação de contatos e espera um retorno de um contato
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const AddContact()),
           ).then(
-            (val) => {
-              if (val is Contact)
-                {
-                  setState(() {
-                    add(val);
-                  }),
-                },
-            },
+            //Caso um contato seja retornado, o adiciona na agenda
+            (val){
+              if(val is Contact){
+                 add(val);
+              }
+            }
           );
         },
         child: const Icon(Icons.add),
