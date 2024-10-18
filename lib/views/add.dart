@@ -100,6 +100,10 @@ class _AddContactState extends State<AddContact> {
                           email: emailController.text,
                           phoneNumber: phoneNumberController.text);
                       //Empurra o resultado do contato para a tela anterior
+
+                      if(widget.contact != null){
+                        contact.id = widget.contact!.id;
+                      }
                       Navigator.pop(context, contact);
                     }
                   },

@@ -39,15 +39,22 @@ class ContactListState extends State<ContactList> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Text("Agenda"),
       ),
-      body: ListView.builder(
-        itemBuilder: (context, index) {
-          return ContactListItem(
-            this,
-            index,
-            AppState.contactController.getByIndex(index),
-          );
-        },
-        itemCount: AppState.contactController.list().length,
+      body: FutureBuilder(future: AppState.contactController.list(), builder: (context, items){
+
+        if(items.hasData){
+          return ListView.builder(
+            itemBuilder: (context, index) {
+              return ContactListItem(
+                this,
+                index,
+                items.data![index],
+              );
+            },
+            itemCount: items.data!.length);
+        }
+
+        return const Text("Ayo");
+      }
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

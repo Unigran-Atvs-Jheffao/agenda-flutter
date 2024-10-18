@@ -1,35 +1,29 @@
 
+import 'package:agenda/daos/contacts/in_memory_dao.dart';
+import 'package:agenda/daos/contacts/sqlite_dao.dart';
 import 'package:agenda/models/contact.dart';
 
 class ContactController {
   
-  final List<Contact> _contacts = [];
+  SqliteDao dao = SqliteDao(); 
 
-  Contact getByIndex(int index) {
-    if (index < 0 || index >= _contacts.length) {
-      throw "Index out of bound for contact list of size ${_contacts.length}";
-    }
-
-    return _contacts[index];
+  Future<Contact> getById(int index) async {
+    return await dao.getById(index);
   }
 
-  List<Contact> list() {
-    return _contacts;
+  Future<List<Contact>> list() async {
+    return await dao.all();
   }
 
-  void delete(Contact contact) {
-    _contacts.remove(contact);
+  void delete(Contact contact) async {
+    dao.delete(contact);
   }
 
-  void update(int index, Contact contact) {
-    if (index < 0 || index >= _contacts.length) {
-      throw "Index out of bound for contact list of size ${_contacts.length}";
-    }
-
-    _contacts[index] = contact;
+  void update(int id, Contact contact) {
+    dao.update(id, contact);
   }
 
   void add(Contact contact){
-    _contacts.add(contact);
+    dao.add(contact);
   }
 }
