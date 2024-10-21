@@ -1,4 +1,5 @@
-import 'package:agenda/daos/Dao.dart';
+
+import 'package:agenda/daos/dao.dart';
 import 'package:agenda/models/contact.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -46,7 +47,7 @@ class SqliteDao extends Dao<int, Contact>{
   @override
   void update(int id, Contact toUpdate) async{
      final db = await database;
-     await db.rawUpdate("update contacts set name=?, email=?, phone_number=? where id = ?", [toUpdate.name,toUpdate.email, toUpdate.phoneNumber, toUpdate.id])
+     await db.rawUpdate("update contacts set name=?, email=?, phone_number=? where id = ?", [toUpdate.name,toUpdate.email, toUpdate.phoneNumber, toUpdate.id]);
   }
 
 }

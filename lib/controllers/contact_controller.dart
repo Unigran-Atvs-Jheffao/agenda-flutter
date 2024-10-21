@@ -5,25 +5,25 @@ import 'package:agenda/models/contact.dart';
 
 class ContactController {
   
-  SqliteDao dao = SqliteDao(); 
+  SqliteDao _dao = SqliteDao(); 
 
   Future<Contact> getById(int index) async {
-    return await dao.getById(index);
+    return await _dao.getById(index);
   }
 
   Future<List<Contact>> list() async {
-    return await dao.all();
+    return await _dao.all();
   }
 
   void delete(Contact contact) async {
-    dao.delete(contact);
+    _dao.delete(contact);
   }
 
   void update(int id, Contact contact) {
-    dao.update(id, contact);
+    _dao.update(id, contact);
   }
 
   void add(Contact contact){
-    dao.add(contact);
+    _dao.add(contact);
   }
 }

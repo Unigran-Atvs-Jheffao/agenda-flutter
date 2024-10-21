@@ -1,4 +1,5 @@
-import 'package:agenda/daos/Dao.dart';
+
+import 'package:agenda/daos/dao.dart';
 import 'package:agenda/models/contact.dart';
 
 class InMemoryDao extends Dao<int, Contact>{
