@@ -1,4 +1,6 @@
+import 'package:agenda/views/add.dart';
 import 'package:agenda/views/list.dart';
+import 'package:agenda/views/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,7 +22,12 @@ class MainApp extends StatelessWidget {
             brightness: Brightness.dark,
             primarySwatch: Colors.purple),
       ),
-      home: const ContactList(),
+      initialRoute: "/login",
+      routes: {
+        "/login": (context) => const Login(),
+        "/listagem": (context) => const ContactList(),
+        "/contato": (context) => const AddContact()
+      }
     );
   }
 }

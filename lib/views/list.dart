@@ -1,6 +1,5 @@
 import 'package:agenda/app_state.dart';
 import 'package:agenda/models/contact.dart';
-import 'package:agenda/views/add.dart';
 import 'package:agenda/views/components/item.dart';
 import 'package:flutter/material.dart';
 
@@ -59,9 +58,9 @@ class ContactListState extends State<ContactList> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           //Navega até a tela de criação de contatos e espera um retorno de um contato
-          Navigator.push(
+          Navigator.pushNamed(
             context,
-            MaterialPageRoute(builder: (context) => const AddContact()),
+            "/contato",
           ).then(
             //Caso um contato seja retornado, o adiciona na agenda
             (val){

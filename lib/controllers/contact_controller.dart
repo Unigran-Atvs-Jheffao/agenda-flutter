@@ -1,11 +1,12 @@
 
 import 'package:agenda/daos/contacts/in_memory_dao.dart';
 import 'package:agenda/daos/contacts/sqlite_dao.dart';
+import 'package:agenda/daos/dao.dart';
 import 'package:agenda/models/contact.dart';
 
 class ContactController {
   
-  SqliteDao _dao = SqliteDao(); 
+  Dao<int,Contact> _dao = SqliteDao() as Dao<int,Contact>; 
 
   Future<Contact> getById(int index) async {
     return await _dao.getById(index);

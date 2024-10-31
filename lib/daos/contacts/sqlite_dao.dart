@@ -7,6 +7,7 @@ import 'package:sqflite/sqflite.dart';
 class SqliteDao extends Dao<int, Contact>{
 
   late Future<Database> database = init();
+  
   SqliteDao();
 
   Future<Database> init() async {
